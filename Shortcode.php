@@ -126,7 +126,7 @@ class Shortcode {
 	protected function getShortcodeList($content){
 		$result = array();
 		
-		preg_match_all("/\[([a-z]+[^\ \]]+)/", $content, $matches);
+		preg_match_all("/\[([A-Za-z_]+[^\ \]]+)/", $content, $matches);
 		if (!empty($matches[1])) {
 			foreach ($matches[1] as $match) {
 				$result[$match] = $match;
