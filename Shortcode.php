@@ -41,20 +41,28 @@ class Shortcode {
 		
 		$path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Shortcodes';
 		foreach (new DirectoryIterator($path) as $fileInfo) {
+			
 			if ($fileInfo->isDot()) {
 				continue;
 			}
-			if ($fileInfo->isDir()) {
-				$shortcode = $fileInfo->getBasename();
-				$shortcode_class_path = $fileInfo->getPathname() . DIRECTORY_SEPARATOR . $shortcode . '.php';
-				if (file_exists($shortcode_class_path) && is_readable($shortcode_class_path)) {
-					require_once $shortcode_class_path;
-					if (in_array('iShortcode', class_implements($shortcode))) {
-						$shortcode_callbacks = $shortcode::getCallbacks();
-						$result = array_merge($result, $shortcode_callbacks);
-					}
-				}
+			if (!$fileInfo->isDir()) {
+				continue;
 			}
+			
+			$shortcode = $fileInfo->getBasename();
+			$shortcode_class_path = $fileInfo->getPathname() . DIRECTORY_SEPARATOR . $shortcode . '.php';
+			
+			if (!file_exists($shortcode_class_path) || !is_readable($shortcode_class_path)) {
+				continue;
+			}
+			
+			require_once $shortcode_class_path;
+			if (!in_array('iShortcode', class_implements($shortcode))) {
+				continue;
+			}
+			
+			$shortcode_callbacks = $shortcode::getCallbacks();
+			$result = array_merge($result, $shortcode_callbacks);
 		}
 
 		return $result;
@@ -132,8 +140,8 @@ class Shortcode {
 	 * 
 	 * Borrowed from WordPress wp/wp-includes/shortcode.php
 	 * 
-	 * @param type $text
-	 * @return type
+	 * @param string $text
+	 * @return array
 	 */
 	protected function shortcodeParseAtts($text) {
 		$atts = array();
@@ -163,7 +171,7 @@ class Shortcode {
 	 * 
 	 * Borrowed from WordPress wp/wp-includes/shortcode.php
 	 * 
-	 * @return type
+	 * @return string
 	 */
 	protected function getShortcodeRegexp($tagregexp) {
 
