@@ -37,8 +37,8 @@ class ShortcodeTest extends PHPUnit_Framework_TestCase {
 				array('lorem [demo]block[/demo] ipsum lorem [demo]block[/demo] ipsum', 'lorem tag="demo" attrs="0=" and content="block" ipsum lorem tag="demo" attrs="0=" and content="block" ipsum'),
 
 				// Multiple different shortcodes
-				array('lorem [test] ipsum lorem [test] ipsum', 'lorem tag="test" attrs="0=" and content="" ipsum lorem tag="test" attrs="0=" and content="" ipsum'),
-				array('lorem [test]block[/test] ipsum lorem [test]block[/test] ipsum', 'lorem tag="test" attrs="0=" and content="block" ipsum lorem tag="test" attrs="0=" and content="block" ipsum'),
+				array('lorem [demo] ipsum lorem [test] ipsum', 'lorem tag="demo" attrs="0=" and content="" ipsum lorem tag="test" attrs="0=" and content="" ipsum'),
+				array('lorem [demo]block[/demo] ipsum lorem [test]block[/test] ipsum', 'lorem tag="demo" attrs="0=" and content="block" ipsum lorem tag="test" attrs="0=" and content="block" ipsum'),
 
 			);
 	}
